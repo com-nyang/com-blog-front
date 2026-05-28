@@ -8,7 +8,7 @@
 
 ## 콘텐츠 모델
 
-모든 글 응답은 다음 필드를 가진다.
+모든 기술 글 응답은 다음 필드를 가진다.
 
 ```ts
 type Post = {
@@ -27,6 +27,22 @@ type Post = {
   };
   coverImageUrl?: string;
   readingTimeMinutes?: number;
+};
+```
+
+기술 일기 응답은 다음 필드를 가진다.
+
+```ts
+type DiaryEntry = {
+  date: string;
+  title: string;
+  summary: string;
+  content: string;
+  contentFormat: "html" | "markdown";
+  tags: string[];
+  mood?: "smooth" | "blocked" | "learned" | "shipped";
+  relatedPostSlugs?: string[];
+  relatedProjectSlugs?: string[];
 };
 ```
 
@@ -65,6 +81,48 @@ type Post = {
 ```
 
 항상 같은 구조를 강제하지는 않는다. 다만 기술 글은 문제, 선택지, 결정, 결과가 드러나야 한다.
+
+## 기술 일기 구조
+
+일기는 완성된 아티클이 아니라 날짜별 개발 기록이다. 짧아도 괜찮지만, 나중에 다시 읽었을 때 맥락을 복원할 수 있어야 한다.
+
+권장 구조:
+
+```md
+# 오늘의 기록
+
+한 줄 요약
+
+## 한 일
+
+## 막힌 점
+
+## 배운 점
+
+## 다음 액션
+```
+
+일기 작성 기준:
+
+- 감상보다 기술적 맥락을 우선한다.
+- 문제를 만나면 에러 메시지, 원인 후보, 해결 단서를 남긴다.
+- 하루에 하나의 큰 주제만 있어도 충분하다.
+- 블로그 글로 확장할 만한 내용은 관련 글 링크로 연결한다.
+
+좋은 예:
+
+```txt
+TanStack Query 캐시 키를 날짜별 일기 API에 맞게 정리했다
+Rust API에서 Markdown을 HTML로 변환할 때 sanitize 위치를 다시 봤다
+```
+
+피할 예:
+
+```txt
+오늘 힘들었다
+코딩했다
+이것저것 했다
+```
 
 ## 제목 규칙
 

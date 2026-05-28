@@ -49,6 +49,8 @@ GET /api/posts
 GET /api/posts/:slug
 GET /api/tags
 GET /api/tags/:tag/posts
+GET /api/diary?year=&month=
+GET /api/diary/:date
 GET /api/search?q=
 ```
 

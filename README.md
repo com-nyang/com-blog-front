@@ -6,6 +6,7 @@
 
 - Rust 백엔드 API와 분리된 프론트엔드 앱으로 만든다.
 - 최신 글, 태그, 카테고리 중심으로 탐색할 수 있다.
+- 날짜별 기술 일기를 달력 중심으로 탐색할 수 있다.
 - 본문 가독성과 코드 블록 표현을 우선한다.
 - 개인 포트폴리오, 프로젝트 소개, 실험적인 프론트엔드 데모까지 확장 가능하게 만든다.
 - 프론트는 UI, 라우팅, 상태 관리, 렌더링에 집중한다.
@@ -47,10 +48,13 @@ src/
     index.tsx
     posts.$slug.tsx
     tags.$tag.tsx
+    diary.index.tsx
+    diary.$date.tsx
     about.tsx
     projects.tsx
   components/
     article/
+    diary/
     layout/
     post/
     ui/
@@ -66,4 +70,5 @@ src/
 2. TanStack Router와 TanStack Query를 설정한다.
 3. 홈, 글 상세, 태그 목록 페이지를 먼저 구현한다.
 4. Rust 백엔드 API 계약에 맞춰 글 목록, 글 상세, 태그 데이터를 연결한다.
-5. 코드 블록, 본문 타이포그래피, 검색 UI를 정리한다.
+5. 기술 일기 달력과 날짜별 일기 상세를 추가한다.
+6. 코드 블록, 본문 타이포그래피, 검색 UI를 정리한다.
