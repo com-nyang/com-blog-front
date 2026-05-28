@@ -72,3 +72,14 @@ src/
 4. Rust 백엔드 API 계약에 맞춰 글 목록, 글 상세, 태그 데이터를 연결한다.
 5. 기술 일기 달력과 날짜별 일기 상세를 추가한다.
 6. 코드 블록, 본문 타이포그래피, 검색 UI를 정리한다.
+
+## 개발 명령
+
+```bash
+pnpm install
+pnpm dev
+pnpm lint
+pnpm build
+```
+
+현재 프론트는 `src/lib/api`의 mock adapter를 사용한다. Rust 백엔드가 준비되면 같은 함수 시그니처를 유지한 채 fetch 기반 구현으로 교체한다.
