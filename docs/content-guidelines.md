@@ -2,47 +2,53 @@
 
 ## 글 형식
 
-모든 글은 MDX로 작성한다.
+콘텐츠의 저장과 발행은 Rust 백엔드가 담당한다. 프론트엔드는 백엔드 API가 내려주는 글 데이터를 렌더링한다.
 
-파일명은 날짜와 slug를 포함한다.
+프론트가 기대하는 글 본문 포맷은 HTML 또는 Markdown 중 하나로 백엔드 API 계약에서 결정한다. MVP에서는 백엔드가 Markdown을 HTML로 변환해 내려주는 방식을 우선 고려한다. 프론트는 보안 처리된 HTML을 렌더링하고, 코드 블록과 이미지 스타일을 담당한다.
 
-```txt
-src/content/posts/2026-05-28-start-blog.mdx
-```
+## 콘텐츠 모델
 
-## Frontmatter
+모든 글 응답은 다음 필드를 가진다.
 
-모든 글은 다음 메타데이터를 가진다.
-
-```mdx
----
-title: "블로그를 시작하며"
-description: "개인 기술 블로그를 만들면서 정한 기준과 방향"
-date: "2026-05-28"
-category: "Retrospective"
-tags:
-  - Frontend
-  - Blog
-published: true
----
+```ts
+type Post = {
+  slug: string;
+  title: string;
+  description: string;
+  content: string;
+  contentFormat: "html" | "markdown";
+  publishedAt: string;
+  updatedAt?: string;
+  category: string;
+  tags: string[];
+  author: {
+    name: string;
+    profileImageUrl?: string;
+  };
+  coverImageUrl?: string;
+  readingTimeMinutes?: number;
+};
 ```
 
 ## 필수 필드
 
 | 필드 | 설명 |
 | --- | --- |
+| slug | URL에 사용할 고유 식별자 |
 | title | 글 제목 |
 | description | 목록과 SEO에 사용할 요약 |
-| date | 발행일 |
+| content | 본문 |
+| contentFormat | 본문 형식 |
+| publishedAt | 발행일 |
 | category | 대표 분류 |
 | tags | 탐색용 태그 목록 |
-| published | 발행 여부 |
+| author | 작성자 정보 |
 
 ## 글 구조
 
 권장 구조:
 
-```mdx
+```md
 # 제목
 
 문제 상황 또는 글의 목적
@@ -69,14 +75,14 @@ published: true
 좋은 예:
 
 ```txt
-Next.js App Router에서 MDX 블로그 구조 잡기
+Vite와 Rust API로 기술 블로그 구조 잡기
 React 19 마이그레이션 중 타입 충돌을 줄이는 방법
 ```
 
 피할 예:
 
 ```txt
-Next.js 정리
+Vite 정리
 React 공부
 오늘 한 것
 ```
@@ -91,7 +97,7 @@ React 공부
 
 ```txt
 React
-Next.js
+Vite
 TypeScript
 CSS
 Testing

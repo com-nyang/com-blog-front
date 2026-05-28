@@ -54,7 +54,7 @@
 
 - Frontend
 - React
-- Next.js
+- Vite
 - TypeScript
 - CSS
 - Web Performance
@@ -117,8 +117,8 @@ About
 - 글 상세
 - 태그별 글 목록
 - About
-- MDX 글 작성
-- SEO 메타데이터
+- Rust 백엔드 API 연동
+- 기본 메타데이터 렌더링
 
 2차 구현에서 다음을 추가한다.
 

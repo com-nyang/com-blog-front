@@ -4,32 +4,34 @@
 
 ## 목표
 
-- 기술 글을 Markdown/MDX로 쉽게 작성한다.
+- Rust 백엔드 API와 분리된 프론트엔드 앱으로 만든다.
 - 최신 글, 태그, 카테고리 중심으로 탐색할 수 있다.
 - 본문 가독성과 코드 블록 표현을 우선한다.
 - 개인 포트폴리오, 프로젝트 소개, 실험적인 프론트엔드 데모까지 확장 가능하게 만든다.
-- 정적 생성 중심으로 빠르게 배포하고 운영 비용을 낮춘다.
+- 프론트는 UI, 라우팅, 상태 관리, 렌더링에 집중한다.
 
 ## 권장 기술 스택
 
 | 영역 | 선택 |
 | --- | --- |
-| Framework | Next.js App Router |
+| Build Tool | Vite |
+| Framework | React |
 | Language | TypeScript |
-| Content | MDX |
+| Routing | TanStack Router |
+| Server State | TanStack Query |
+| Content Source | Rust 백엔드 API |
 | Styling | Tailwind CSS |
 | UI Primitive | Radix UI 또는 shadcn/ui |
 | Code Highlight | Shiki |
-| Search | Pagefind 또는 Fuse.js |
-| Feed | RSS / sitemap 자동 생성 |
-| Deploy | Vercel |
+| Search | 백엔드 검색 API 또는 Fuse.js |
+| Deploy | Cloudflare Pages, Netlify, Vercel 중 선택 |
 | Package Manager | pnpm |
 
-## 왜 Next.js인가
+## 왜 Vite + React인가
 
-개인 블로그만 놓고 보면 Astro도 좋은 선택입니다. 하지만 이 프로젝트는 프론트엔드 블로그이므로, 글 안에 React 컴포넌트 기반 데모를 넣거나 프로젝트 쇼케이스, 검색, 동적 OG 이미지, 인터랙티브 UI를 확장할 가능성이 큽니다.
+이 프로젝트는 백엔드를 Rust로 별도 구현한다. 따라서 Next.js처럼 서버 기능까지 포함한 메타 프레임워크를 기본값으로 두지 않는다.
 
-따라서 기본 선택은 `Next.js + MDX + Tailwind CSS`로 가져갑니다.
+프론트는 `Vite + React + TypeScript`로 구성하고, 백엔드 API에서 글 목록, 글 상세, 태그, 검색 데이터를 받아 렌더링한다. 이 구조가 역할 분리가 명확하고 Rust 백엔드와도 잘 맞는다.
 
 ## 문서
 
@@ -41,28 +43,27 @@
 
 ```txt
 src/
-  app/
-    page.tsx
-    posts/[slug]/page.tsx
-    tags/[tag]/page.tsx
-    about/page.tsx
-    projects/page.tsx
+  routes/
+    index.tsx
+    posts.$slug.tsx
+    tags.$tag.tsx
+    about.tsx
+    projects.tsx
   components/
     article/
     layout/
     post/
     ui/
-  content/
-    posts/
   lib/
-    content/
+    api/
     metadata/
+    query/
 ```
 
 ## 초기 구현 순서
 
-1. Next.js 프로젝트를 TypeScript, Tailwind CSS, pnpm 기준으로 생성한다.
-2. MDX 글 로딩 파이프라인을 만든다.
+1. Vite 프로젝트를 React, TypeScript, Tailwind CSS, pnpm 기준으로 생성한다.
+2. TanStack Router와 TanStack Query를 설정한다.
 3. 홈, 글 상세, 태그 목록 페이지를 먼저 구현한다.
-4. 코드 블록, 본문 타이포그래피, SEO 메타데이터를 정리한다.
-5. RSS, sitemap, 검색을 추가한다.
+4. Rust 백엔드 API 계약에 맞춰 글 목록, 글 상세, 태그 데이터를 연결한다.
+5. 코드 블록, 본문 타이포그래피, 검색 UI를 정리한다.

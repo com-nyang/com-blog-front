@@ -2,28 +2,55 @@
 
 ## 결론
 
-이 블로그는 `Next.js App Router + TypeScript + MDX + Tailwind CSS`를 기본 스택으로 사용한다.
+이 블로그의 프론트엔드는 `Vite + React + TypeScript + TanStack Router + TanStack Query + Tailwind CSS`를 기본 스택으로 사용한다.
 
-개인 기술 블로그의 핵심은 글 작성 경험, 읽기 경험, 검색 가능성, 배포 안정성이다. 프론트엔드 개발자의 블로그라는 성격상 단순 정적 글뿐 아니라 React 컴포넌트 기반 예제, 인터랙티브 데모, 프로젝트 쇼케이스로 확장될 수 있어 Next.js를 우선 선택한다.
+백엔드는 Rust로 별도 구현한다. 따라서 프론트엔드는 서버 기능을 가진 메타 프레임워크가 아니라 UI, 라우팅, 서버 상태 관리, 렌더링에 집중하는 순수 프론트엔드 앱으로 구성한다.
+
+개인 기술 블로그의 핵심은 읽기 경험, 탐색 경험, 검색 가능성, 유지보수성이다. 콘텐츠 저장, 발행, 검색, RSS, sitemap 같은 서버 책임은 Rust 백엔드에서 다루고, 프론트는 그 데이터를 잘 보여주는 역할에 집중한다.
 
 ## 스택 상세
 
-### Next.js App Router
+### Vite
 
-- 정적 생성 기반 블로그 구현에 적합하다.
-- 글 상세, 태그, 프로젝트, 소개 페이지를 파일 기반 라우팅으로 명확하게 구성할 수 있다.
-- 향후 동적 OG 이미지, 서버 컴포넌트, 검색 페이지 등으로 확장하기 쉽다.
+- 프론트엔드 앱 개발 경험이 빠르고 단순하다.
+- React, TypeScript, Tailwind CSS 조합을 가볍게 구성할 수 있다.
+- Rust 백엔드와 독립적으로 빌드하고 배포하기 쉽다.
+
+### React
+
+- 글 목록, 태그 필터, 검색, 프로젝트 쇼케이스 같은 UI를 컴포넌트 단위로 구성하기 좋다.
+- 프론트엔드 데모나 인터랙티브 예제를 블로그 안에 넣기 쉽다.
+- 생태계가 넓고 유지보수 자료가 많다.
 
 ### TypeScript
 
-- 글 메타데이터, 태그, 작성자, 카테고리 스키마를 타입으로 관리한다.
-- 콘텐츠 로딩 코드의 안정성을 높인다.
+- 백엔드 API 응답 타입을 명확하게 관리한다.
+- 글 메타데이터, 태그, 작성자, 카테고리 모델을 타입으로 관리한다.
+- API 연동 코드와 UI props의 안정성을 높인다.
 
-### MDX
+### TanStack Router
 
-- Markdown 기반으로 글을 작성한다.
-- 필요한 경우 글 안에 React 컴포넌트를 삽입할 수 있다.
-- 코드 예제, 비교 표, 인터랙티브 샘플을 기술 블로그 문맥에 맞게 표현할 수 있다.
+- 프론트 전용 라우팅을 타입 안전하게 구성할 수 있다.
+- 홈, 글 상세, 태그, About, Projects 같은 화면 구조와 잘 맞는다.
+- loader와 route context를 활용해 데이터 패칭 경계를 명확히 둘 수 있다.
+
+### TanStack Query
+
+- Rust 백엔드 API에서 받아오는 글 목록, 글 상세, 태그, 검색 결과를 캐싱한다.
+- 로딩, 에러, 재시도, refetch 처리를 표준화한다.
+- 서버 상태와 클라이언트 UI 상태를 분리한다.
+
+### Rust 백엔드 API
+
+프론트는 콘텐츠를 파일에서 직접 읽지 않는다. Rust 백엔드가 다음 API를 제공한다고 가정한다.
+
+```txt
+GET /api/posts
+GET /api/posts/:slug
+GET /api/tags
+GET /api/tags/:tag/posts
+GET /api/search?q=
+```
 
 ### Tailwind CSS
 
@@ -42,38 +69,42 @@
 - 다크/라이트 테마를 안정적으로 지원한다.
 - 기술 글의 코드 가독성을 높인다.
 
-### Pagefind 또는 Fuse.js
+### 검색
 
-- 초기에는 빌드 산출물 기반 검색인 Pagefind를 우선 검토한다.
-- 글 수가 적은 초기 단계에서는 Fuse.js로 클라이언트 검색을 구성해도 충분하다.
+- 기본은 Rust 백엔드 검색 API를 사용한다.
+- MVP에서 백엔드 검색이 늦어지면 Fuse.js로 클라이언트 검색을 임시 구성할 수 있다.
 
-### Vercel
+### 배포
 
-- Next.js와 궁합이 좋다.
-- GitHub push 기반 자동 배포와 preview deployment를 쉽게 사용할 수 있다.
-- 개인 블로그 운영에 필요한 인프라 관리 부담이 낮다.
+- 프론트는 정적 파일로 빌드해서 배포한다.
+- Cloudflare Pages, Netlify, Vercel 중 하나를 선택한다.
+- 백엔드는 별도 Rust 서버로 배포한다.
 
 ## 대안 검토
 
+### Vue
+
+우아한형제들 기술블로그의 공개 HTML에는 `{{item.name}}` 같은 Vue/Mustache 스타일 바인딩 흔적이 보인다. 또한 게시글과 이미지 URL에서 `wp-content/uploads` 경로가 확인되어 WordPress 계열 CMS와 클라이언트 렌더링을 조합한 구조로 추정된다.
+
+Vue로 구현해도 이 프로젝트 목적에는 잘 맞는다. 다만 작성자가 React 기반 프론트엔드 데모와 생태계를 활용할 가능성이 크다면 React를 기본값으로 둔다.
+
+### Next.js
+
+Next.js는 좋은 선택지지만 이 프로젝트에서는 기본값으로 두지 않는다. 백엔드를 Rust로 가져가면 Next.js의 서버 기능, API route, 서버 컴포넌트, 서버 액션이 핵심 장점으로 작동하지 않는다.
+
 ### Astro
 
-순수 콘텐츠 블로그라면 Astro가 더 가볍고 적합할 수 있다. Markdown/MDX content collections도 잘 갖춰져 있다.
-
-다만 이 프로젝트는 프론트엔드 개발자의 개인 블로그로, React 데모와 프로젝트 확장 가능성이 중요하므로 Next.js를 선택한다.
-
-### Gatsby
-
-기술 블로그 구현 경험과 플러그인 생태계는 장점이다. 하지만 현재 신규 프로젝트 기준으로는 Next.js나 Astro에 비해 선택 우선순위가 낮다.
+순수 콘텐츠 블로그라면 Astro도 좋은 선택이다. 하지만 이 프로젝트는 Rust 백엔드 API와 연동되는 프론트 앱으로 보고, 라우팅과 서버 상태 관리를 명확히 가져가기 위해 Vite + React를 선택한다.
 
 ### Headless CMS
 
-초기에는 사용하지 않는다. 개인 블로그는 Git 기반 MDX 작성이 가장 단순하고 이력 관리가 쉽다.
+초기에는 별도 Headless CMS를 사용하지 않는다. 콘텐츠 저장과 발행은 Rust 백엔드 설계에서 결정한다.
 
 나중에 비개발자 편집자, 예약 발행, 관리자 화면이 필요해지면 Sanity, Contentful, Strapi 등을 검토한다.
 
 ## 운영 기준
 
-- 글은 Git에 저장한다.
-- 배포는 main branch push 기준으로 자동화한다.
-- 모든 글은 title, description, date, tags, category를 가진다.
-- 검색, RSS, sitemap은 MVP 이후 빠르게 추가한다.
+- 프론트와 백엔드는 독립 배포한다.
+- 프론트는 API 계약을 타입으로 관리한다.
+- 모든 글은 title, description, date, tags, category를 가진 응답 모델을 사용한다.
+- SEO에 필요한 canonical URL, OG 이미지, sitemap, RSS는 Rust 백엔드와 책임 경계를 정한다.
