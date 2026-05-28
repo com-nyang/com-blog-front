@@ -25,18 +25,22 @@ export function HomePage() {
   return (
     <div className="page">
       <section className="hero-section">
-        <p className="eyebrow">Frontend Journal</p>
-        <h1>기술 글과 개발 일기를 한곳에 쌓는 개인 블로그</h1>
+        <p className="eyebrow">I want to do so many things</p>
+        <h1
+          className="hero-title"
+          aria-label="재미..재미..오직 재미.."
+        >
+          <span aria-hidden="true">재미..재미..오직 재미..</span>
+        </h1>
         <p>
-          정리된 아티클은 글로, 하루 단위의 개발 맥락은 기술 일기로 남깁니다.
-          프론트는 Vite와 React로 만들고 Rust 백엔드 API와 분리합니다.
+          자기만족을 위한 쓰잘데기 없는 기술 블로그
         </p>
         <div className="hero-actions">
           <Link to="/posts" className="primary-button">
-            글 보기
+            글
           </Link>
           <Link to="/diary" className="secondary-button">
-            일기 달력
+            일기
           </Link>
         </div>
       </section>
@@ -70,7 +74,7 @@ export function HomePage() {
           <div>
             <div className="section-heading compact">
               <p className="eyebrow">Diary</p>
-              <h2>최근 기술 일기</h2>
+              <h2>남의 일기는 보는게 아닙니다.</h2>
             </div>
             <DiaryPreviewList entries={diaryEntries} />
           </div>

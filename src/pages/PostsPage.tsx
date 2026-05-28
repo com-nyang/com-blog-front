@@ -14,7 +14,7 @@ export function PostsPage() {
       <div className="section-heading">
         <p className="eyebrow">Posts</p>
         <h1>기술 글</h1>
-        <p>정리된 문제 해결 과정과 설계 결정을 모아둡니다.</p>
+        <p>언젠가 도움이 될만한 글 모음집</p>
       </div>
 
       {isLoading ? <p className="muted">글을 불러오는 중입니다.</p> : null}

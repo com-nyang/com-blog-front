@@ -3,7 +3,6 @@ import { Link, Outlet } from "@tanstack/react-router";
 const navItems = [
   { to: "/", label: "Home" },
   { to: "/posts", label: "Posts" },
-  { to: "/tags", label: "Tags" },
   { to: "/diary", label: "Diary" },
   { to: "/projects", label: "Projects" },
   { to: "/about", label: "About" },

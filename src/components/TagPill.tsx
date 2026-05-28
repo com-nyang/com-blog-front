@@ -8,8 +8,8 @@ type TagPillProps = {
 export function TagPill({ tag, count }: TagPillProps) {
   return (
     <Link to="/tags/$tag" params={{ tag }} className="tag-pill">
-      <span>{tag}</span>
-      {typeof count === "number" ? <strong>{count}</strong> : null}
+      {tag}
+      {typeof count === "number" ? <span>({count})</span> : null}
     </Link>
   );
 }

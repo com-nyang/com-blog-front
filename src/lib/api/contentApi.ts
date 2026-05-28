@@ -42,7 +42,7 @@ export async function getTags(): Promise<Array<{ name: string; count: number }>>
 
   return Array.from(counts.entries())
     .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 }
 
 export async function getPostsByTag(tag: string): Promise<PostSummary[]> {

@@ -12,7 +12,6 @@ import { PostDetailPage } from "../pages/PostDetailPage";
 import { PostsPage } from "../pages/PostsPage";
 import { ProjectsPage } from "../pages/ProjectsPage";
 import { TagDetailPage } from "../pages/TagDetailPage";
-import { TagsPage } from "../pages/TagsPage";
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -34,12 +33,6 @@ const postDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/posts/$slug",
   component: PostDetailPage,
-});
-
-const tagsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/tags",
-  component: TagsPage,
 });
 
 const tagDetailRoute = createRoute({
@@ -76,7 +69,6 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   postsRoute,
   postDetailRoute,
-  tagsRoute,
   tagDetailRoute,
   diaryRoute,
   diaryDetailRoute,
