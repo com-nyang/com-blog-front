@@ -22,10 +22,9 @@ export function DiaryPage() {
     <div className="page">
       <div className="section-heading">
         <p className="eyebrow">Diary</p>
-        <h1>기술 일기</h1>
+        <h1>일기장</h1>
         <p>
-          하루 단위로 남기는 개발 기록입니다. 완성된 글이 되기 전의 문제,
-          단서, 배운 점을 달력으로 모읍니다.
+          그날그날 기분에 따라서 쓸수도 있고 안쓸수도 있고..
         </p>
       </div>
 

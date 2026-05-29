@@ -69,6 +69,7 @@ export const diaryEntries: DiaryEntry[] = [
     title: "프론트와 Rust 백엔드의 책임을 나눴다",
     summary:
       "Next.js 풀스택 전제를 버리고 Vite 기반 프론트 앱으로 방향을 정리했다.",
+    event: "아키텍처 정리",
     contentFormat: "html",
     tags: ["Architecture", "Rust", "Vite"],
     mood: "learned",
@@ -86,6 +87,7 @@ export const diaryEntries: DiaryEntry[] = [
     title: "기술 일기 달력 UX를 잡았다",
     summary:
       "일기가 있는 날짜를 작은 점으로 표시하고, 선택한 날짜의 요약을 아래에 보여주는 방향으로 정했다.",
+    event: "블로그 UI 개선",
     contentFormat: "html",
     tags: ["Diary", "UX", "Calendar"],
     mood: "shipped",

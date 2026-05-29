@@ -13,7 +13,7 @@ export function Layout() {
     <div className="app-shell">
       <header className="site-header">
         <Link to="/" className="brand" aria-label="COM Blog home">
-          <span className="brand-mark">C</span>
+          <img className="brand-mark" src="/site-icon.png" alt="" />
           <span>COM Blog</span>
         </Link>
         <nav className="site-nav" aria-label="Primary navigation">
@@ -36,7 +36,7 @@ export function Layout() {
       </main>
 
       <footer className="site-footer">
-        <p>Rust API와 분리된 프론트엔드 기술 블로그.</p>
+        <p>저메추</p>
       </footer>
     </div>
   );

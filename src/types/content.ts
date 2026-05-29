@@ -29,6 +29,7 @@ export type DiaryEntry = {
   date: string;
   title: string;
   summary: string;
+  event?: string;
   content: string;
   contentFormat: ContentFormat;
   tags: string[];

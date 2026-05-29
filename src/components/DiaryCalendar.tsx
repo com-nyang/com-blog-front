@@ -97,10 +97,13 @@ export function DiaryCalendar({
                 key={dateKey}
                 to="/diary/$date"
                 params={{ date: dateKey }}
-                className={`calendar-day has-entry${isToday ? " is-today" : ""}`}
-                title={entry.title}
+                className={`calendar-day has-entry${entry.event ? " has-event" : ""}${isToday ? " is-today" : ""}`}
+                title={entry.event ? `${entry.title} - ${entry.event}` : entry.title}
               >
-                <span>{date.getDate()}</span>
+                <span className="calendar-date-number">{date.getDate()}</span>
+                {entry.event ? (
+                  <span className="calendar-event">{entry.event}</span>
+                ) : null}
                 <i aria-hidden="true" />
               </Link>
             );
@@ -111,7 +114,7 @@ export function DiaryCalendar({
               key={dateKey}
               className={`calendar-day${isToday ? " is-today" : ""}`}
             >
-              {date.getDate()}
+              <span className="calendar-date-number">{date.getDate()}</span>
             </span>
           );
         })}

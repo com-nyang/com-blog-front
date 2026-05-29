@@ -72,15 +72,13 @@ button {
 }
 
 .brand-mark {
-  display: inline-grid;
   width: 32px;
   height: 32px;
-  place-items: center;
   border: 1px solid var(--color-ink);
-  border-radius: 9px;
+  border-radius: 50%;
   background: var(--color-ink);
-  color: var(--color-surface-strong);
   box-shadow: 0 8px 22px rgba(37, 35, 31, 0.16);
+  object-fit: cover;
 }
 
 .site-nav {
@@ -479,9 +477,13 @@ button {
 
 .calendar-day {
   position: relative;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
   min-height: clamp(44px, 8vw, 76px);
-  place-items: center;
+  padding: 12px 6px 16px;
   border: 1px solid var(--color-line-soft);
   border-radius: 10px;
   background: rgba(255, 253, 248, 0.72);
@@ -522,6 +524,22 @@ button {
   height: 6px;
   border-radius: 999px;
   background: currentColor;
+}
+
+.calendar-date-number {
+  line-height: 1;
+}
+
+.calendar-event {
+  width: 100%;
+  overflow: hidden;
+  color: var(--color-accent-deep);
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .article-header {
